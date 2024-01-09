@@ -98,5 +98,79 @@ export async function getTickets(req: AuthenticatedRequest, res: Response): Prom
   }
 }
 
+export async function createTicket(req: AuthenticatedRequest, res: Response): Promise<void> {
+  try {
+    const userId = Number(req.userId);
+
+    if (isNaN(userId)) {
+      res.status(httpStatus.BAD_REQUEST).json({ error: 'Invalid userId' });
+      return;
+    }
+
+    const enrollment = await prisma.enrollment.findFirst({
+      where: {
+        userId: userId,
+      },
+    });
+
+    if (!enrollment) {
+      res.status(httpStatus.NOT_FOUND).json({ error: 'User has no enrollment' });
+      return;
+    }
+
+    const { ticketTypeId } = req.body;
+
+    if (ticketTypeId === undefined || ticketTypeId === null) {
+      res.status(httpStatus.BAD_REQUEST).json({ error: 'Missing ticketTypeId in the request body' });
+      return;
+    }
+
+    const selectedTicketType = await prisma.ticketType.findUnique({
+      where: {
+        id: ticketTypeId,
+      },
+    });
+
+    if (!selectedTicketType) {
+      res.status(httpStatus.NOT_FOUND).json({ error: 'TicketType not found' });
+      return;
+    }
+
+    const newTicket = await prisma.ticket.create({
+      data: {
+        status: 'RESERVED',
+        ticketTypeId: selectedTicketType.id,
+        enrollmentId: enrollment.id,
+      },
+      include: {
+        TicketType: true,
+      },
+    });
+
+    const formattedTicket = {
+      id: newTicket.id,
+      status: newTicket.status,
+      ticketTypeId: newTicket.ticketTypeId,
+      enrollmentId: newTicket.enrollmentId,
+      TicketType: {
+        id: newTicket.TicketType.id,
+        name: newTicket.TicketType.name,
+        price: newTicket.TicketType.price,
+        isRemote: newTicket.TicketType.isRemote,
+        includesHotel: newTicket.TicketType.includesHotel,
+        createdAt: newTicket.TicketType.createdAt,
+        updatedAt: newTicket.TicketType.updatedAt,
+      },
+      createdAt: newTicket.createdAt,
+      updatedAt: newTicket.updatedAt,
+    };
+
+    res.status(httpStatus.CREATED).json(formattedTicket);
+  } catch (error) {
+    console.error('Erro:', error);
+    res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ error: 'Internal Server Error' });
+  }
+}
+
 
 

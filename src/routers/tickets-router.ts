@@ -4,12 +4,14 @@ import { getEnrollmentByUser, postCreateOrUpdateEnrollment, getAddressFromCEP } 
 import { createOrUpdateEnrollmentSchema } from '@/schemas';
 import { getTicketTypes } from '@/controllers/tickets-controller';
 import { getTickets } from '@/controllers/tickets-controller';
+import { createTicket } from '@/controllers/tickets-controller';
+
 const ticketsRouter = Router();
 
 ticketsRouter
   .all('/*', authenticateToken)
   .get('/types', getTicketTypes) //get tickets types
   .get('/', getTickets) //get tickets
-  .post('/', validateBody(createOrUpdateEnrollmentSchema), postCreateOrUpdateEnrollment); //post tickets
+  .post('/', createTicket); //post tickets
 
 export { ticketsRouter };
