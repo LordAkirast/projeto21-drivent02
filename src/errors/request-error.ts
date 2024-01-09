@@ -6,6 +6,6 @@ export function requestError(status: number, statusText: string): RequestError {
     data: null,
     status,
     statusText,
-    message: 'No result for this search!',
+    message: 'No result for this searche!',
   };
 }
