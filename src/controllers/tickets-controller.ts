@@ -30,7 +30,12 @@ export async function getTicketTypes(req: AuthenticatedRequest, res: Response): 
 
 export async function getTickets(req: AuthenticatedRequest, res: Response): Promise<void> {
   try {
-    const userId: number = req.userId;
+    const userId = Number(req.userId);
+
+    if (isNaN(userId)) {
+      res.status(httpStatus.BAD_REQUEST).json({ error: 'Invalid userId' });
+      return;
+    }
 
     const user = await prisma.user.findUnique({
       where: {
@@ -92,4 +97,6 @@ export async function getTickets(req: AuthenticatedRequest, res: Response): Prom
     res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ error: 'Internal Server Error' });
   }
 }
+
+
 
