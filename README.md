@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Driven.t - Back-end
 
 Back-end for Driven.t, an event management solution.
@@ -74,3 +75,6 @@ You can operate on databases for different environments, but it is necessary to 
 There are several things you need to do when you add new ENV VARIABLES:
 - Add them to `.env.example` file
 - Add them to your local `.env.development` and `.env.test` files
+=======
+# projeto21-drivent02
+>>>>>>> 8d00ca72a12764aacfb1d9136ac5e1496eb90bc3
