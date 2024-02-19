@@ -3,6 +3,7 @@ import * as jwt from 'jsonwebtoken';
 import { unauthorizedError } from '@/errors';
 import { authenticationRepository } from '@/repositories';
 
+////
 export async function authenticateToken(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const authHeader = req.header('Authorization');
   if (!authHeader) throw unauthorizedError();

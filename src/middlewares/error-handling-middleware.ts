@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import httpStatus from 'http-status';
 import { ApplicationError, RequestError } from '@/protocols';
 
+////
 export function handleApplicationErrors(
   err: RequestError | ApplicationError | Error,
   _req: Request,

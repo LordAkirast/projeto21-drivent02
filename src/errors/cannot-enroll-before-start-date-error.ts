@@ -6,3 +6,5 @@ export function cannotEnrollBeforeStartDateError(): ApplicationError {
     message: 'Cannot enroll before event start date!',
   };
 }
+
+////

@@ -6,3 +6,5 @@ export function notFoundError(): ApplicationError {
     message: 'No result for this search!',
   };
 }
+
+////

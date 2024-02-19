@@ -90,7 +90,7 @@ export async function getTickets(req: AuthenticatedRequest, res: Response): Prom
       createdAt: ticket.createdAt,
       updatedAt: ticket.updatedAt,
     };
-
+////
     res.status(httpStatus.OK).json(formattedTicket);
   } catch (error) {
     console.error('Erro:', error);

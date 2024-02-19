@@ -9,3 +9,5 @@ export function requestError(status: number, statusText: string): RequestError {
     message: 'No result for this searche!',
   };
 }
+
+////
